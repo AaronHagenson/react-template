@@ -12,7 +12,6 @@ export function* retrieveProfileStart() {
   try {
     const profile = yield call(Api.getAuthProfile);
     yield put(retrieveProfileComplete(profile));
-
   } catch (e) {
     yield put(retrieveProfileError(e));
   }

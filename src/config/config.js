@@ -16,7 +16,8 @@ export function trimTrailingSlash(path) {
 
 function loadNodeConfiguration() {
   return new Promise((resolve, reject) => {
-    axios.get(`${location.origin}/configuration`)
+    axios
+      .get(`${location.origin}/configuration`)
       .then(response => {
         config = response.data;
         resolve();
@@ -31,17 +32,22 @@ function loadNodeConfiguration() {
 
 function loadIisConfiguration() {
   return new Promise((resolve, reject) => {
-    let absoluteRoot = global.window.location.origin + global.window.location.pathname;
+    let absoluteRoot =
+      global.window.location.origin + global.window.location.pathname;
     absoluteRoot = trimTrailingSlash(absoluteRoot);
 
-    $.getJSON(`${absoluteRoot}/config.json`, data => {
-      config = data;
-      resolve();
-      loaded = true;
-    }, err => {
-      loaded = false;
-      reject(`Unable to get configuration: ${err}`);
-    });
+    $.getJSON(
+      `${absoluteRoot}/config.json`,
+      data => {
+        config = data;
+        resolve();
+        loaded = true;
+      },
+      err => {
+        loaded = false;
+        reject(`Unable to get configuration: ${err}`);
+      }
+    );
   });
 }
 

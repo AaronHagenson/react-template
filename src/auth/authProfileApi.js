@@ -1,6 +1,4 @@
-import {
-  getAccessToken
-} from './auth0Middleware';
+import {getAccessToken} from './auth0Middleware';
 import axios from 'axios';
 import config from '../config/config';
 
@@ -16,7 +14,8 @@ class AuthProfileApi {
     };
 
     return new Promise((resolve, reject) => {
-      axios.post(`${endpoint}/userinfo`, {}, payload)
+      axios
+        .post(`${endpoint}/userinfo`, {}, payload)
         .then(response => {
           resolve(response.data);
         })

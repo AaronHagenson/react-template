@@ -55,7 +55,10 @@ describe('authProfileSaga', () => {
   describe('watchAuthProfileRetrieval', () => {
     it('should call retrieveProfileStart', () => {
       const generator = saga.watchAuthProfileRetrieval();
-      const expected = takeEvery(types.AUTH_PROFILE_RETRIEVAL_STARTED, saga.retrieveProfileStart);
+      const expected = takeEvery(
+        types.AUTH_PROFILE_RETRIEVAL_STARTED,
+        saga.retrieveProfileStart
+      );
       const actual = generator.next().value;
 
       expect(actual).toEqual(expected);

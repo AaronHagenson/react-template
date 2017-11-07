@@ -1,4 +1,8 @@
-import middleware, {reAuth, getAccessToken, handleExpiredToken} from '../../src/auth/auth0Middleware';
+import middleware, {
+  reAuth,
+  getAccessToken,
+  handleExpiredToken
+} from '../../src/auth/auth0Middleware';
 import sinon from 'sinon';
 import projectConfig from '../../src/config/config';
 
@@ -7,10 +11,8 @@ describe('auth0Middleware', () => {
     domain: 'test',
     clientID: 'test',
     storagePrefix: 'test',
-    tokenExpiredHandler: () => {
-    },
-    actionsWhitelist: ['TEST_ACTION'],
-
+    tokenExpiredHandler: () => {},
+    actionsWhitelist: ['TEST_ACTION']
   };
 
   const getState = () => {
@@ -56,51 +58,54 @@ describe('auth0Middleware', () => {
     });
 
     it('should return next action for whitelisted action if token not ok', () => {
-      currentTokenIsOkMock = sinon.stub(utilities, 'currentTokenIsOk').callsFake(() => {
-        return {
-          isOk: false,
-          isExpired: false
-        };
-      });
+      currentTokenIsOkMock = sinon
+        .stub(utilities, 'currentTokenIsOk')
+        .callsFake(() => {
+          return {
+            isOk: false,
+            isExpired: false
+          };
+        });
 
       const mdware = middleware(defaultConfig);
       const next = mdware({getState});
-      const action = next(() => {
-      });
+      const action = next(() => {});
       action({type: 'TEST_ACTION'});
 
       expect(defaultConfig.tokenExpiredHandler.callCount).toBe(0);
     });
 
     it('should call tokenExpiredHandler if token is expired', () => {
-      currentTokenIsOkMock = sinon.stub(utilities, 'currentTokenIsOk').callsFake(() => {
-        return {
-          isOk: false,
-          isExpired: true
-        };
-      });
+      currentTokenIsOkMock = sinon
+        .stub(utilities, 'currentTokenIsOk')
+        .callsFake(() => {
+          return {
+            isOk: false,
+            isExpired: true
+          };
+        });
 
       const mdware = middleware(defaultConfig);
       const next = mdware({getState});
-      const action = next(() => {
-      });
+      const action = next(() => {});
       action({type: 'OTHER_ACTION'});
 
       expect(defaultConfig.tokenExpiredHandler.calledOnce).toBe(true);
     });
 
     it('should return next action if everything is ok', () => {
-      currentTokenIsOkMock = sinon.stub(utilities, 'currentTokenIsOk').callsFake(() => {
-        return {
-          isOk: true,
-          isExpired: false
-        };
-      });
+      currentTokenIsOkMock = sinon
+        .stub(utilities, 'currentTokenIsOk')
+        .callsFake(() => {
+          return {
+            isOk: true,
+            isExpired: false
+          };
+        });
 
       const mdware = middleware(defaultConfig);
       const next = mdware({getState});
-      const action = next(() => {
-      });
+      const action = next(() => {});
       action({type: 'OTHER_ACTION'});
 
       expect(defaultConfig.tokenExpiredHandler.callCount).toBe(0);
@@ -118,10 +123,12 @@ describe('auth0Middleware', () => {
 
     beforeEach(() => {
       tokenExpiredHandlerSpy = sinon.spy(defaultConfig, 'tokenExpiredHandler');
-      setAuthInfoStub = sinon.stub(utilities, 'setAuthInfo').callsFake(() => {
-      });
-      setAuthRedirectPathStub = sinon.stub(utilities, 'setAuthRedirectPath').callsFake(() => {
-      });
+      setAuthInfoStub = sinon
+        .stub(utilities, 'setAuthInfo')
+        .callsFake(() => {});
+      setAuthRedirectPathStub = sinon
+        .stub(utilities, 'setAuthRedirectPath')
+        .callsFake(() => {});
       loginStub = sinon.stub(auth0Factory, 'createAuth').callsFake(() => {
         return {
           authorize: () => {}
@@ -212,27 +219,30 @@ describe('auth0Middleware', () => {
 
       const utilities = require('../../src/auth/auth0Utilities');
       const auth0Factory = require('../../src/auth/auth0Factory');
-      const setAuthInfo = sinon.stub(utilities, 'setAuthInfo').callsFake(() => {
-      });
-      const setAuthRedirectPath = sinon.stub(utilities, 'setAuthRedirectPath').callsFake(() => {
-      });
+      const setAuthInfo = sinon
+        .stub(utilities, 'setAuthInfo')
+        .callsFake(() => {});
+      const setAuthRedirectPath = sinon
+        .stub(utilities, 'setAuthRedirectPath')
+        .callsFake(() => {});
       const auth0Mock = sinon.stub(auth0Factory, 'createAuth').callsFake(() => {
         return {
-          authorize: () => {
-          }
+          authorize: () => {}
         };
       });
       const config = {
         domain: 'test',
         clientID: 'test',
-        tokenExpiredHandler: () => {
-        }
+        tokenExpiredHandler: () => {}
       };
       middleware(config);
-      reAuth({
-        authConnection: '',
-        audience: ''
-      }, '');
+      reAuth(
+        {
+          authConnection: '',
+          audience: ''
+        },
+        ''
+      );
 
       expect(setAuthInfo.calledOnce).toBe(true);
       expect(setAuthRedirectPath.calledOnce).toBe(true);
@@ -246,13 +256,15 @@ describe('auth0Middleware', () => {
   describe('getAccessToken', () => {
     it('should get access token', () => {
       const storage = require('../../src/auth/localUtilities');
-      const localStorageGetter = sinon.stub(storage, 'localStorageGetter').callsFake(() => {
-        return {
-          getItem: () => {
-            return JSON.stringify({accessToken: 'test'});
-          }
-        };
-      });
+      const localStorageGetter = sinon
+        .stub(storage, 'localStorageGetter')
+        .callsFake(() => {
+          return {
+            getItem: () => {
+              return JSON.stringify({accessToken: 'test'});
+            }
+          };
+        });
 
       const token = getAccessToken();
       localStorageGetter.restore();

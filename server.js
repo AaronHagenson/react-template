@@ -7,7 +7,9 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const defaultSettings = JSON.parse(fs.readFileSync(path.join(__dirname, 'dist', 'config.json'), 'utf8'));
+const defaultSettings = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'dist', 'config.json'), 'utf8')
+);
 
 function loadConfiguration() {
   let settings = {};
@@ -40,15 +42,15 @@ for (let configOption in settings) {
   }
 }
 
-app.get('/configuration', function (req, res) {
+app.get('/configuration', function(req, res) {
   res.send(settings);
 });
 
-app.get('*', function (req, res) {
+app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(port, (err) => {
+app.listen(port, err => {
   if (err) {
     console.error(err);
     throw err;

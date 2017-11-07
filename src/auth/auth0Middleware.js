@@ -2,9 +2,7 @@
 // repo's being published out to our npm server
 import * as utilities from './auth0Utilities';
 import * as storage from './localUtilities';
-import {
-  createAuth
-} from './auth0Factory';
+import {createAuth} from './auth0Factory';
 
 const authInfoStorageKeySuffix = 'auth';
 const authRedirectRouteStorageKeySuffix = 'authRedirectRoute';
@@ -20,29 +18,32 @@ export const auth0MiddlewareFactory = config => {
     clientID: config.clientID
   });
 
-  const actionsWhitelist = Array.isArray(config.actionsWhitelist) ? config.actionsWhitelist : [];
+  const actionsWhitelist = Array.isArray(config.actionsWhitelist)
+    ? config.actionsWhitelist
+    : [];
 
   if (config.storagePrefix) {
     authInfoStorageKey = config.storagePrefix + '.' + authInfoStorageKeySuffix;
-    authRedirectRouteStorageKey = config.storagePrefix + '.' + authRedirectRouteStorageKeySuffix;
+    authRedirectRouteStorageKey =
+      config.storagePrefix + '.' + authRedirectRouteStorageKeySuffix;
   }
 
-  return function ({
-                     getState
-                   }) {
+  return function({getState}) {
     return next => {
       return action => {
         if (actionsWhitelist.includes(action.type)) {
           return next(action);
         } else {
-
           // check the state of the current token
-          const tokenOkResult = utilities.currentTokenIsOk(authInfoStorageKey,
-            authRedirectRouteStorageKey, _auth0, config);
+          const tokenOkResult = utilities.currentTokenIsOk(
+            authInfoStorageKey,
+            authRedirectRouteStorageKey,
+            _auth0,
+            config
+          );
 
           // if something is not ok
           if (!tokenOkResult.isOk) {
-
             // get the auth redirect pathName
             let pathName = utilities.getPathName(action, getState());
 
@@ -69,7 +70,6 @@ export function handleExpiredToken(config, tokenOkResult, pathName) {
     } else {
       reAuth(config, pathName);
     }
-
   } else {
     // if our current token was missing
     reAuth(config, pathName);

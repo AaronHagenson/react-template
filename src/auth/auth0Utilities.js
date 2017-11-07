@@ -30,10 +30,10 @@ export const removeAuthRedirectPath = storageKey => {
   return sessionStorage.removeItem(storageKey);
 };
 
-export const tokenIsExpired = (authInfo) => {
+export const tokenIsExpired = authInfo => {
   const expDate = new Date(authInfo.exp);
   const utcNow = new Date();
-  return (utcNow >= expDate);
+  return utcNow >= expDate;
 };
 
 export const redirectToOriginalPath = (redirectPath, config) => {

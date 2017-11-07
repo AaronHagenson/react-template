@@ -26,21 +26,22 @@ describe('authProfileApi', () => {
 
   it('should get the auth profile', () => {
     mockAdapter.onPost('/userinfo').reply(() => {
-      return [200, { auth: 'profile' }];
+      return [200, {auth: 'profile'}];
     });
 
-    return AuthProfileApi.getAuthProfile()
-      .then(response => {
-        expect(response.auth).toEqual('profile');
-      });
+    return AuthProfileApi.getAuthProfile().then(response => {
+      expect(response.auth).toEqual('profile');
+    });
   });
 
   it('should return an error', () => {
     mockAdapter.onPost('/userinfo').reply(() => {
       return [500, null];
     });
-    return AuthProfileApi.getAuthProfile().catch((error) => {
-      expect(error).toEqual('Error getting auth profile information Error: Request failed with status code 500');
+    return AuthProfileApi.getAuthProfile().catch(error => {
+      expect(error).toEqual(
+        'Error getting auth profile information Error: Request failed with status code 500'
+      );
     });
   });
 });

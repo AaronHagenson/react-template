@@ -22,19 +22,20 @@ export class AppNavbar extends React.Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={0}
-                       className={this.props.location === '/' && 'active'}
-                       onClick={this.props.navigate.bind(this, '/')}>
+              <NavItem
+                eventKey={0}
+                className={this.props.location === '/' && 'active'}
+                onClick={this.props.navigate.bind(this, '/')}>
                 Home
               </NavItem>
             </Nav>
             <Nav pullRight>
-              <NavItem>
-                {this.props.authInfo.email}
-              </NavItem>
-              <NavItem style={{'height': '0px', 'width': '0px'}}>
-                <img src={this.props.authInfo.picture}
-                     className="navbar-profile-image"/>
+              <NavItem>{this.props.authInfo.email}</NavItem>
+              <NavItem style={{height: '0px', width: '0px'}}>
+                <img
+                  src={this.props.authInfo.picture}
+                  className="navbar-profile-image"
+                />
               </NavItem>
             </Nav>
           </Navbar.Collapse>
@@ -53,7 +54,11 @@ AppNavbar.propTypes = {
 export const mapStateToProps = state => {
   let pathName = '/';
 
-  if (state.routing && state.routing.locationBeforeTransitions && state.routing.locationBeforeTransitions.pathname) {
+  if (
+    state.routing &&
+    state.routing.locationBeforeTransitions &&
+    state.routing.locationBeforeTransitions.pathname
+  ) {
     pathName = state.routing.locationBeforeTransitions.pathname;
   }
   return {
@@ -70,7 +75,4 @@ export const mapDispatchToProps = () => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppNavbar);
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavbar);

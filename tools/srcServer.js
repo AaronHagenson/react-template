@@ -25,16 +25,20 @@ browserSync({
 
     middleware: [
       // Handle /configuration route
-      function (req, res, next) {
+      function(req, res, next) {
         if (req.url.includes('/configuration')) {
-          fs.readFile(`${__dirname}/../src/config/config.json`, 'utf8', (err, data) => {
-            if (err) {
-              res.end(`Unable to locate default configuration.`);
-            } else {
-              res.setHeader('Content-Type', 'json');
-              res.end(data);
+          fs.readFile(
+            `${__dirname}/../src/config/config.json`,
+            'utf8',
+            (err, data) => {
+              if (err) {
+                res.end(`Unable to locate default configuration.`);
+              } else {
+                res.setHeader('Content-Type', 'json');
+                res.end(data);
+              }
             }
-          });
+          );
         } else {
           next();
         }
@@ -57,7 +61,7 @@ browserSync({
           timings: false,
           chunks: false,
           chunkModules: false
-        },
+        }
 
         // for other settings see
         // http://webpack.github.io/docs/webpack-dev-middleware.html
@@ -70,7 +74,5 @@ browserSync({
 
   // no need to watch '*.js' here, webpack will take care of it for us,
   // including full page reloads if HMR won't work
-  files: [
-    'src/*.html'
-  ]
+  files: ['src/*.html']
 });

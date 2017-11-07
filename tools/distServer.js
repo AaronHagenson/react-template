@@ -20,13 +20,11 @@ browserSync({
     baseDir: 'dist'
   },
 
-  files: [
-    'src/*.html'
-  ],
+  files: ['src/*.html'],
 
   middleware: [
     // Handle /configuration route
-    function (req, res, next) {
+    function(req, res, next) {
       if (req.url.includes('/configuration')) {
         fs.readFile(`${__dirname}/../dist/config.json`, 'utf8', (err, data) => {
           if (err) {

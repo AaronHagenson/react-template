@@ -10,13 +10,12 @@ import sinon from 'sinon';
 describe('tokenExpiredModal', () => {
   const props = {
     showModal: true,
-    reAuthHandler: () => {
-    }
+    reAuthHandler: () => {}
   };
 
   it('should render modal title', () => {
     //Arrange & Act
-    const wrapper = shallow(<TokenExpiredModal {...props}/>);
+    const wrapper = shallow(<TokenExpiredModal {...props} />);
     wrapper.setProps({showModal: true});
 
     //Assert
@@ -24,20 +23,24 @@ describe('tokenExpiredModal', () => {
     expect(wrapper.find('Modal').node.props.show).toBe(true);
     expect(wrapper.find('ModalHeader').length).toBe(1);
     expect(wrapper.find('ModalTitle').length).toBe(1);
-    expect(wrapper.find('ModalTitle').node.props.children).toBe('Session Expired');
+    expect(wrapper.find('ModalTitle').node.props.children).toBe(
+      'Session Expired'
+    );
   });
 
   it('should render modal body', () => {
     //Arrange & Act
-    const wrapper = shallow(<TokenExpiredModal {...props}/>);
+    const wrapper = shallow(<TokenExpiredModal {...props} />);
     wrapper.setProps({showModal: true});
 
     //Assert
     expect(wrapper.find('Modal').length).toBe(1);
     expect(wrapper.find('ModalBody').length).toBe(1);
-    expect(wrapper.contains(<p>
-      Your session has expired. Click continue to re-authenticate.
-    </p>)).toBe(true);
+    expect(
+      wrapper.contains(
+        <p>Your session has expired. Click continue to re-authenticate.</p>
+      )
+    ).toBe(true);
   });
 
   it('should render modal footer', () => {
@@ -45,7 +48,7 @@ describe('tokenExpiredModal', () => {
     let onClickSpy = sinon.spy();
 
     //Act
-    const wrapper = shallow(<TokenExpiredModal {...props}/>);
+    const wrapper = shallow(<TokenExpiredModal {...props} />);
     wrapper.setProps({showModal: true, reAuthHandler: onClickSpy});
 
     //Assert
@@ -56,8 +59,7 @@ describe('tokenExpiredModal', () => {
   });
 
   it('should map state to props', () => {
-    const myFunc = function () {
-    };
+    const myFunc = function() {};
 
     const actual = mapStateToProps({
       token: {

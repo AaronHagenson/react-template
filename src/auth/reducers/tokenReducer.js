@@ -15,7 +15,6 @@ export default function update(state = initialState.token, action) {
       isExpired: true,
       reAuthHandler: action.payload.reAuthHandler
     });
-
   } else {
     return state;
   }

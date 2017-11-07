@@ -56,18 +56,22 @@ export default {
       trackJSToken: ''
     }),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
+      $: 'jquery',
+      jQuery: 'jquery'
     }),
-    new CopyWebpackPlugin([{
-      from: 'src/config/*',
-      flatten: true
-    }, {
-      from: 'Web.config',
-      flatten: false
-    }, {
-      from: 'src/health.html'
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/config/*',
+        flatten: true
+      },
+      {
+        from: 'Web.config',
+        flatten: false
+      },
+      {
+        from: 'src/health.html'
+      }
+    ]),
 
     // Minify JS
     new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
@@ -81,28 +85,39 @@ export default {
           includePaths: [path.resolve(__dirname, 'src', 'scss')]
         },
         context: '/',
-        postcss: () => [autoprefixer],
+        postcss: () => [autoprefixer]
       }
     })
   ],
   module: {
     rules: [
       {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'},
-      {test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?name=[name].[ext]'},
+      {
+        test: /\.eot(\?v=\d+.\d+.\d+)?$/,
+        loader: 'url-loader?name=[name].[ext]'
+      },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=[name].[ext]'
+        loader:
+          'url-loader?limit=10000&mimetype=application/font-woff&name=[name].[ext]'
       },
       {
         test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/octet-stream&name=[name].[ext]'
+        loader:
+          'url-loader?limit=10000&mimetype=application/octet-stream&name=[name].[ext]'
       },
-      {test: /\.svg(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml&name=[name].[ext]'},
+      {
+        test: /\.svg(\?v=\d+.\d+.\d+)?$/,
+        loader:
+          'url-loader?limit=10000&mimetype=image/svg+xml&name=[name].[ext]'
+      },
       {test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]'},
       {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
       {
         test: /(\.css|\.scss|\.sass)$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap!postcss-loader!sass-loader?sourceMap')
+        loader: ExtractTextPlugin.extract(
+          'css-loader?sourceMap!postcss-loader!sass-loader?sourceMap'
+        )
       }
     ]
   }
