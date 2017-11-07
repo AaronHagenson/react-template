@@ -1,0 +1,3 @@
+// export const MY_ACTION_STARTED = 'MY_ACTION_STARTED';
+// export const MY_ACTION_COMPLETE = 'MY_ACTION_COMPLETE';
+// export const MY_ACTION_ERROR = 'MY_ACTION_ERROR';
