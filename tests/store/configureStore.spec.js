@@ -29,9 +29,7 @@ describe('configureStore', () => {
         clientID: 'test id',
         authConnection: 'chr test',
         audience: 'test audience',
-        actionsWhitelist: [
-          'TOKEN_IS_EXPIRED'
-        ],
+        actionsWhitelist: ['TOKEN_IS_EXPIRED'],
         storagePrefix: 'react-slingshot',
         baseUrl: 'nullblank'
       });
@@ -72,19 +70,17 @@ describe('configureStore', () => {
     it('should should choose the dev store', () => {
       process.env.NODE_ENV = 'development';
 
-      return store.configureStore()
-        .then(store => {
-          expect(store).toBeDefined();
-        });
+      return store.configureStore().then(store => {
+        expect(store).toBeDefined();
+      });
     });
 
     it('should should choose the prod store', () => {
       process.env.NODE_ENV = 'production';
 
-      return store.configureStore()
-        .then(store => {
-          expect(store).toBeDefined();
-        });
+      return store.configureStore().then(store => {
+        expect(store).toBeDefined();
+      });
     });
 
     it('should handle exception', () => {
@@ -95,10 +91,9 @@ describe('configureStore', () => {
         });
       });
 
-      return store.configureStore()
-        .catch(err => {
-          expect(err).toEqual('err');
-        });
+      return store.configureStore().catch(err => {
+        expect(err).toEqual('err');
+      });
     });
   });
 });

@@ -41,33 +41,33 @@ describe('config', () => {
         });
       });
 
-      return Config.loadConfiguration()
-        .then(() => {
-          expect(Config.getConfig()).toEqual({
-            testParam: 'test param'
-          });
+      return Config.loadConfiguration().then(() => {
+        expect(Config.getConfig()).toEqual({
+          testParam: 'test param'
         });
+      });
     });
 
     it('should handle error', () => {
-      jqueryMock = sinon.stub($, 'getJSON').callsFake((data, callback, errorCallback) => {
-        errorCallback('error getting json');
-      });
-
-      return Config.loadConfiguration()
-        .catch(err => {
-          expect(err).toEqual('Unable to get configuration: error getting json');
-
-          let error = false;
-          try {
-            Config.getConfig();
-          } catch (e) {
-            expect(e).toEqual('Config not loaded');
-            error = true;
-          }
-
-          expect(error).toBe(true);
+      jqueryMock = sinon
+        .stub($, 'getJSON')
+        .callsFake((data, callback, errorCallback) => {
+          errorCallback('error getting json');
         });
+
+      return Config.loadConfiguration().catch(err => {
+        expect(err).toEqual('Unable to get configuration: error getting json');
+
+        let error = false;
+        try {
+          Config.getConfig();
+        } catch (e) {
+          expect(e).toEqual('Config not loaded');
+          error = true;
+        }
+
+        expect(error).toBe(true);
+      });
     });
   });
 
@@ -86,35 +86,37 @@ describe('config', () => {
     });
 
     it('should load configuration', () => {
-      mockAdapter.onGet('null/configuration')
+      mockAdapter
+        .onGet('null/configuration')
         .reply(200, '{"testParam":"test param"}');
 
-      return Config.loadConfiguration()
-        .then(() => {
-          expect(Config.getConfig()).toEqual({
-            testParam: 'test param'
-          });
+      return Config.loadConfiguration().then(() => {
+        expect(Config.getConfig()).toEqual({
+          testParam: 'test param'
         });
+      });
     });
 
     it('should handle error', () => {
-      mockAdapter.onGet('null/configuration')
+      mockAdapter
+        .onGet('null/configuration')
         .reply(404, 'Configuration not found');
 
-      return Config.loadConfiguration()
-        .catch(err => {
-          expect(err).toEqual('Unable to get configuration: Error: Request failed with status code 404');
+      return Config.loadConfiguration().catch(err => {
+        expect(err).toEqual(
+          'Unable to get configuration: Error: Request failed with status code 404'
+        );
 
-          let error = false;
-          try {
-            Config.getConfig();
-          } catch (e) {
-            expect(e).toEqual('Config not loaded');
-            error = true;
-          }
+        let error = false;
+        try {
+          Config.getConfig();
+        } catch (e) {
+          expect(e).toEqual('Config not loaded');
+          error = true;
+        }
 
-          expect(error).toBe(true);
-        });
+        expect(error).toBe(true);
+      });
     });
   });
 });

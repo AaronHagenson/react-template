@@ -1,12 +1,15 @@
-import {AppNavbar, mapStateToProps, mapDispatchToProps} from '../../src/components/appNavbar';
+import {
+  AppNavbar,
+  mapStateToProps,
+  mapDispatchToProps
+} from '../../src/components/appNavbar';
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
 
 describe('AppNavbar', () => {
   const defaultProps = {
-    navigate: () => {
-    },
+    navigate: () => {},
     location: '/',
     authInfo: {
       email: 'test@test.com'
@@ -14,7 +17,7 @@ describe('AppNavbar', () => {
   };
 
   it('should display app name', () => {
-    const wrapper = shallow(<AppNavbar {...defaultProps}/>);
+    const wrapper = shallow(<AppNavbar {...defaultProps} />);
 
     expect(wrapper.find('NavbarHeader').length).toBe(1);
     expect(wrapper.find('NavbarBrand').length).toBe(1);
@@ -62,8 +65,7 @@ describe('AppNavbar', () => {
   describe('mapDispatchToProps', () => {
     const router = require('react-router');
     const history = router.hashHistory;
-    sinon.stub(history, 'push').callsFake(() => {
-    });
+    sinon.stub(history, 'push').callsFake(() => {});
 
     const props = mapDispatchToProps();
 

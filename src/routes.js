@@ -7,7 +7,7 @@ import NotFoundPage from './components/notFoundPage';
 
 export default (
   <Route path="/" component={AppMain}>
-    <IndexRoute component={HomePage}/>
-    <Route path="*" component={NotFoundPage}/>
+    <IndexRoute component={HomePage} />
+    <Route path="*" component={NotFoundPage} />
   </Route>
 );

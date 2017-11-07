@@ -19,8 +19,9 @@ configureStore()
 
     render(
       <Provider store={store}>
-        <Router history={history} routes={routes}/>
-      </Provider>, document.getElementById('app')
+        <Router history={history} routes={routes} />
+      </Provider>,
+      document.getElementById('app')
     );
   })
   .catch(err => {

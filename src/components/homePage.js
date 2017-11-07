@@ -10,14 +10,14 @@ class HomePage extends React.Component {
       <div>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1">
-            <h1 className="page-header"><i className="fa fa-2x fa-home"/> Home Page</h1>
+            <h1 className="page-header">
+              <i className="fa fa-2x fa-home" /> Home Page
+            </h1>
           </div>
         </div>
         <div className="row">
           <div className="col-xs-8 col-xs-offset-2">
-            <div className="jumbotron text-center">
-              Hello, World!
-            </div>
+            <div className="jumbotron text-center">Hello, World!</div>
           </div>
         </div>
       </div>

@@ -24,9 +24,7 @@ export const getAuthMiddlewareConfig = () => {
     clientID: config.getConfig().oAuthClientId,
     authConnection: config.getConfig().oAuthConnection,
     audience: config.getConfig().oAuthAudience,
-    actionsWhitelist: [
-      TOKEN_IS_EXPIRED
-    ],
+    actionsWhitelist: [TOKEN_IS_EXPIRED],
     storagePrefix: pack.name,
     baseUrl
   };
@@ -45,9 +43,11 @@ export function configureStoreProd(initialState) {
     store.dispatch(tokenExpired(reAuth));
   };
 
-  store = createStore(rootReducer, initialState, compose(
-    applyMiddleware(...middlewares)
-  ));
+  store = createStore(
+    rootReducer,
+    initialState,
+    compose(applyMiddleware(...middlewares))
+  );
 
   // as of redux-saga 0.10.0, you can't pass a sagas function into the createSagaMiddleware
   // function. instead .run(... ) must be called
@@ -68,15 +68,18 @@ export function configureStoreDev(initialState) {
   ];
 
   // add support for Redux dev tools
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   let store = {};
   authConfig.tokenExpiredHandler = reAuth => {
     store.dispatch(tokenExpired(reAuth));
   };
 
-  store = createStore(rootReducer, initialState, composeEnhancers(
-    applyMiddleware(...middlewares)
-  ));
+  store = createStore(
+    rootReducer,
+    initialState,
+    composeEnhancers(applyMiddleware(...middlewares))
+  );
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
@@ -96,7 +99,8 @@ export function configureStoreDev(initialState) {
 
 export function configureStore(initialState) {
   return new Promise((resolve, reject) => {
-    config.loadConfiguration()
+    config
+      .loadConfiguration()
       .then(() => {
         if (process.env.NODE_ENV === 'production') {
           resolve(configureStoreProd(initialState));

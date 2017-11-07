@@ -10,29 +10,30 @@ describe('auth0Utilities', () => {
           test: 'test string 1'
         });
       },
-      setItem: () => {
-      }
+      setItem: () => {}
     };
     const sessionStorageFunctions = {
       getItem: () => {
         return JSON.stringify('test string 2');
       },
-      setItem: () => {
-      },
-      removeItem: () => {
-      }
+      setItem: () => {},
+      removeItem: () => {}
     };
 
     let localStorageMock;
     let sessionStorageMock;
 
     beforeEach(() => {
-      localStorageMock = sinon.stub(utils, 'localStorageGetter').callsFake(() => {
-        return localStorageFunctions;
-      });
-      sessionStorageMock = sinon.stub(utils, 'sessionStorageGetter').callsFake(() => {
-        return sessionStorageFunctions;
-      });
+      localStorageMock = sinon
+        .stub(utils, 'localStorageGetter')
+        .callsFake(() => {
+          return localStorageFunctions;
+        });
+      sessionStorageMock = sinon
+        .stub(utils, 'sessionStorageGetter')
+        .callsFake(() => {
+          return sessionStorageFunctions;
+        });
     });
 
     afterEach(() => {
@@ -133,23 +134,29 @@ describe('auth0Utilities', () => {
 
   describe('getPathName', () => {
     it('should get router action pathname', () => {
-      const actual = authUtils.getPathName({
-        type: '@@router',
-        payload: {
-          pathname: 'testroute'
-        }
-      }, {});
+      const actual = authUtils.getPathName(
+        {
+          type: '@@router',
+          payload: {
+            pathname: 'testroute'
+          }
+        },
+        {}
+      );
       expect(actual).toEqual('testroute');
     });
 
     it('should get non router action pathname', () => {
-      const actual = authUtils.getPathName({}, {
-        routing: {
-          locationBeforeTransitions: {
-            pathname: 'testroute'
+      const actual = authUtils.getPathName(
+        {},
+        {
+          routing: {
+            locationBeforeTransitions: {
+              pathname: 'testroute'
+            }
           }
         }
-      });
+      );
       expect(actual).toEqual('testroute');
     });
 
@@ -166,17 +173,18 @@ describe('auth0Utilities', () => {
         getItem: () => {
           return JSON.stringify({});
         },
-        setItem: () => {
-        }
+        setItem: () => {}
       };
 
       let localStorageMock;
       let hashMock;
 
       beforeEach(() => {
-        localStorageMock = sinon.stub(utils, 'localStorageGetter').callsFake(() => {
-          return localStorageFunctions;
-        });
+        localStorageMock = sinon
+          .stub(utils, 'localStorageGetter')
+          .callsFake(() => {
+            return localStorageFunctions;
+          });
         hashMock = sinon.stub(utils, 'getWindowHash').callsFake(() => {
           return 'test';
         });
@@ -220,10 +228,8 @@ describe('auth0Utilities', () => {
         getItem: () => {
           return '';
         },
-        setItem: () => {
-        },
-        removeItem: () => {
-        }
+        setItem: () => {},
+        removeItem: () => {}
       };
       const localStorageFunctions = {
         getItem: () => {
@@ -232,8 +238,7 @@ describe('auth0Utilities', () => {
             error: 'error'
           });
         },
-        setItem: () => {
-        }
+        setItem: () => {}
       };
 
       let sessionStorageMock;
@@ -241,12 +246,16 @@ describe('auth0Utilities', () => {
       let hashMock;
 
       beforeEach(() => {
-        sessionStorageMock = sinon.stub(utils, 'sessionStorageGetter').callsFake(() => {
-          return sessionStorageFunctions;
-        });
-        localStorageMock = sinon.stub(utils, 'localStorageGetter').callsFake(() => {
-          return localStorageFunctions;
-        });
+        sessionStorageMock = sinon
+          .stub(utils, 'sessionStorageGetter')
+          .callsFake(() => {
+            return sessionStorageFunctions;
+          });
+        localStorageMock = sinon
+          .stub(utils, 'localStorageGetter')
+          .callsFake(() => {
+            return localStorageFunctions;
+          });
         hashMock = sinon.stub(utils, 'getWindowHash').callsFake(() => {
           return 'access_token=';
         });
@@ -293,14 +302,15 @@ describe('auth0Utilities', () => {
               error: 'error'
             });
           },
-          setItem: () => {
-          }
+          setItem: () => {}
         };
 
         localStorageMock.restore();
-        localStorageMock = sinon.stub(utils, 'localStorageGetter').callsFake(() => {
-          return alteredFunctions;
-        });
+        localStorageMock = sinon
+          .stub(utils, 'localStorageGetter')
+          .callsFake(() => {
+            return alteredFunctions;
+          });
 
         const actions = {
           parseHash: (hash, callback) => {

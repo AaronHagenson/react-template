@@ -1,4 +1,4 @@
-import { createAuth } from '../../src/auth/auth0Factory';
+import {createAuth} from '../../src/auth/auth0Factory';
 
 describe('auth0Factory', () => {
   it('should create auth instance', () => {
