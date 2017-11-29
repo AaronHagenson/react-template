@@ -27,10 +27,10 @@ build/Release
 node_modules
 
 #dist folder
-.dist
+dist
 
 # IDEA/Webstorm project files
-.idea
+idea
 
 #VSCode metadata
 .vscode
