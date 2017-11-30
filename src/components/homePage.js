@@ -17,7 +17,9 @@ class HomePage extends React.Component {
         </div>
         <div className="row">
           <div className="col-xs-8 col-xs-offset-2">
-            <div className="jumbotron text-center">Hello, World!</div>
+            <div className="jumbotron text-center">
+              <p>Hello, World!</p>
+            </div>
           </div>
         </div>
       </div>
