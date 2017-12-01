@@ -18,7 +18,9 @@ export class TokenExpiredModal extends React.Component {
           <p>Your session has expired. Click continue to re-authenticate.</p>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn" onClick={this.props.reAuthHandler}>
+          <button
+            className="btn btn-default"
+            onClick={this.props.reAuthHandler}>
             Continue
           </button>
         </Modal.Footer>

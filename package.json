@@ -126,8 +126,7 @@
     },
     "collectCoverageFrom": [
       "src/**/*.js",
-      "!src/**/*.spec.js",
-      "!src/index.js"
+      "!src/**/*.spec.js"
     ],
     "testResultsProcessor": "jest-sonar-reporter"
   },
