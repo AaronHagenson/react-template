@@ -6,29 +6,10 @@ import auth0 from '../auth/auth0Middleware';
 import rootReducer from '../reducers';
 import sagas from '../sagas';
 import config from '../config/config';
-import {TOKEN_IS_EXPIRED} from '../auth/constants/actionTypes';
 import {tokenExpired} from '../auth/actions/tokenActions';
+import {getAuthMiddlewareConfig} from './authMiddlewareConfig';
 
-const pack = require('../../package.json');
 const sagaMiddleware = createSagaMiddleware();
-
-export const getAuthMiddlewareConfig = () => {
-  // Trim off trailing slash if a second one is added
-  let baseUrl = window.location.origin + window.location.pathname;
-  if (baseUrl.endsWith('//')) {
-    baseUrl = baseUrl.substring(0, baseUrl.length - 1);
-  }
-
-  return {
-    domain: config.getConfig().oAuthDomain,
-    clientID: config.getConfig().oAuthClientId,
-    authConnection: config.getConfig().oAuthConnection,
-    audience: config.getConfig().oAuthAudience,
-    actionsWhitelist: [TOKEN_IS_EXPIRED],
-    storagePrefix: pack.name,
-    baseUrl
-  };
-};
 
 export function configureStoreProd(initialState) {
   const authConfig = getAuthMiddlewareConfig();
