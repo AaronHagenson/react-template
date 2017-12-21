@@ -35,22 +35,24 @@ export const auth0MiddlewareFactory = config => {
           return next(action);
         } else {
           // check the state of the current token
-          const tokenOkResult = utilities.currentTokenIsOk(
-            authInfoStorageKey,
-            authRedirectRouteStorageKey,
-            _auth0,
-            config
-          );
+          utilities
+            .currentTokenIsOk(
+              authInfoStorageKey,
+              authRedirectRouteStorageKey,
+              _auth0,
+              config
+            )
+            .then(tokenOkResult => {
+              // if something is not ok
+              if (!tokenOkResult.isOk) {
+                // get the auth redirect pathName
+                let pathName = utilities.getPathName(action, getState());
 
-          // if something is not ok
-          if (!tokenOkResult.isOk) {
-            // get the auth redirect pathName
-            let pathName = utilities.getPathName(action, getState());
-
-            handleExpiredToken(config, tokenOkResult, pathName);
-          } else {
-            return next(action);
-          }
+                handleExpiredToken(config, tokenOkResult, pathName);
+              } else {
+                return next(action);
+              }
+            });
         }
       };
     };
