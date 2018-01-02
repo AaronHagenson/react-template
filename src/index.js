@@ -25,7 +25,7 @@ store
       document.getElementById('app')
     );
   })
-  .catch(err => {
+  .catch(() => {
     // Catch block exists to avoid an unhandled promise rejection in
     // unit tests. Nothing will be shown if the dom fails to render.
   });
