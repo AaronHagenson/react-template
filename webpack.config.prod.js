@@ -65,10 +65,6 @@ export default {
         flatten: true
       },
       {
-        from: 'Web.config',
-        flatten: false
-      },
-      {
         from: 'src/health.html'
       }
     ]),
