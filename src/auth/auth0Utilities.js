@@ -75,7 +75,12 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
       tokenIsOk = !isExpired;
     }
 
-    if (!isExpired && !tokenIsOk) {
+    if (isExpired || tokenIsOk) {
+      resolve({
+        isOk: tokenIsOk,
+        isExpired
+      });
+    } else {
       // no local authInfo found
       // check for auth token in window hash
       // if no is found there, no go
@@ -118,11 +123,6 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
           isExpired: false
         });
       }
-    } else {
-      resolve({
-        isOk: tokenIsOk,
-        isExpired
-      });
     }
   });
 };
