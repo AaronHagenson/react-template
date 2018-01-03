@@ -196,7 +196,11 @@ describe('auth0Utilities', () => {
       });
 
       it('should return an okay token', () => {
-        const actual = authUtils.currentTokenIsOk('', '', {}, {});
+        const actual = authUtils.currentTokenIsOk('', '', {
+          parseHash: (hash, callback) => {
+            console.log('got here');
+          }
+        }, {});
         actual.then(result => {
           expect(result).toEqual({
             isExpired: false,

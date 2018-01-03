@@ -106,13 +106,23 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
 
             redirectToOriginalPath(redirectPath, config);
           }
+
+          resolve({
+            isOk: tokenIsOk,
+            isExpired
+          });
+        });
+      } else {
+        resolve({
+          isOk: false,
+          isExpired: false
         });
       }
+    } else {
+      resolve({
+        isOk: tokenIsOk,
+        isExpired
+      });
     }
-
-    resolve({
-      isOk: tokenIsOk,
-      isExpired
-    });
   });
 };
