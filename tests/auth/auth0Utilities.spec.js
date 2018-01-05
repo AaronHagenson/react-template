@@ -196,11 +196,18 @@ describe('auth0Utilities', () => {
       });
 
       it('should return an okay token', () => {
-        const actual = authUtils.currentTokenIsOk('', '', {}, {});
-        expect(actual).toEqual({
-          isExpired: false,
-          isOk: true
+        const actual = authUtils.currentTokenIsOk('', '', {
+          parseHash: (hash, callback) => {
+            console.log('got here');
+          }
+        }, {});
+        actual.then(result => {
+          expect(result).toEqual({
+            isExpired: false,
+            isOk: true
+          });
         });
+        return actual;
       });
 
       it('should set tokenIsOk to false if authInfo has error', () => {
@@ -213,12 +220,15 @@ describe('auth0Utilities', () => {
 
         const actual = authUtils.currentTokenIsOk('', '', {}, {});
 
-        expect(actual).toEqual({
-          isExpired: false,
-          isOk: false
+        actual.then(result => {
+          expect(result).toEqual({
+            isExpired: false,
+            isOk: false
+          });
+          localStorageFunctions.getItem = oldFunc;
         });
 
-        localStorageFunctions.getItem = oldFunc;
+        return actual;
       });
     });
 
@@ -278,13 +288,14 @@ describe('auth0Utilities', () => {
         sinon.spy(actions, 'parseHash');
 
         const actual = authUtils.currentTokenIsOk('', '', actions, {});
-        expect(actions.parseHash.callCount).toBe(1);
-        expect(actual).toEqual({
-          isExpired: true,
-          isOk: true
+        actual.then(result => {
+          expect(result).toEqual({
+            isExpired: true,
+            isOk: true
+          });
+          actions.parseHash.restore();
         });
-
-        actions.parseHash.restore();
+        return actual;
       });
 
       it('should redirect if the token is not expired and is ok', () => {
@@ -325,15 +336,18 @@ describe('auth0Utilities', () => {
         const actual = authUtils.currentTokenIsOk('', '', actions, {
           baseUrl: 'localhost:3000'
         });
-        expect(sessionStorageFunctions.removeItem.callCount).toBe(1);
-        expect(actual).toEqual({
-          isExpired: false,
-          isOk: true
-        });
-        expect(global.window.location.href).toEqual('localhost:3000');
+        actual.then(result => {
+          expect(sessionStorageFunctions.removeItem.callCount).toBe(1);
+          expect(result).toEqual({
+            isExpired: false,
+            isOk: true
+          });
+          expect(global.window.location.href).toEqual('localhost:3000');
 
-        sessionStorageFunctions.removeItem.restore();
-        global.window = oldWindow;
+          sessionStorageFunctions.removeItem.restore();
+          global.window = oldWindow;
+        });
+        return actual;
       });
     });
   });

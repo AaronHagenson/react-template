@@ -76,13 +76,17 @@ describe('auth0Middleware', () => {
     });
 
     it('should call tokenExpiredHandler if token is expired', () => {
+      let prom;
       currentTokenIsOkMock = sinon
         .stub(utilities, 'currentTokenIsOk')
         .callsFake(() => {
-          return {
-            isOk: false,
-            isExpired: true
-          };
+          prom = new Promise(resolve => {
+            resolve({
+              isOk: false,
+              isExpired: true
+            });
+          });
+          return prom;
         });
 
       const mdware = middleware(defaultConfig);
@@ -90,17 +94,25 @@ describe('auth0Middleware', () => {
       const action = next(() => {});
       action({type: 'OTHER_ACTION'});
 
-      expect(defaultConfig.tokenExpiredHandler.calledOnce).toBe(true);
+      prom.then(() => {
+        expect(defaultConfig.tokenExpiredHandler.calledOnce).toBe(true);
+      });
+
+      return prom;
     });
 
     it('should return next action if everything is ok', () => {
+      let prom;
       currentTokenIsOkMock = sinon
         .stub(utilities, 'currentTokenIsOk')
         .callsFake(() => {
-          return {
-            isOk: true,
-            isExpired: false
-          };
+          prom = new Promise(resolve => {
+            resolve({
+              isOk: true,
+              isExpired: false
+            });
+          });
+          return prom;
         });
 
       const mdware = middleware(defaultConfig);
@@ -108,7 +120,10 @@ describe('auth0Middleware', () => {
       const action = next(() => {});
       action({type: 'OTHER_ACTION'});
 
-      expect(defaultConfig.tokenExpiredHandler.callCount).toBe(0);
+      prom.then(() => {
+        expect(defaultConfig.tokenExpiredHandler.callCount).toBe(0);
+      });
+      return prom;
     });
   });
 
