@@ -1,7 +1,5 @@
 # React Redux Template
 
-# This template is not yet supported by DevOps!  If you have issues with code cloned from this template not flowing through the DevOps pipeline then please reach out to the people who have contributed to this template :)
-
 A UI template utilizing the following technologies:
 * React
 * Redux
