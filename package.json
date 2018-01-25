@@ -21,7 +21,7 @@
     "remove-dist": "rimraf ./dist",
     "prebuild": "npm run lint",
     "build": "babel-node tools/build.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --no-cache --runInBand",
     "test:watch": "jest --watch",
     "e2e": "nightwatch --config ./nightwatch.js",
     "open:cover": "npm run test && open coverage/lcov-report/index.html",
