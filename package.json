@@ -30,7 +30,7 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
-    "auth0-js": "8.10.1",
+    "auth0-js": "9.2.3",
     "axios": "0.15.3",
     "bootstrap": "3.3.7",
     "express": "4.15.4",
