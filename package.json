@@ -6,7 +6,7 @@
     "npm": ">=3"
   },
   "scripts": {
-    "preinstall": "node tools/nodeVersionCheck.js",
+    "preinstall": "node --version && npm --version",
     "setup": "node tools/setup/setupMessage.js && npm install && node tools/setup/setup.js",
     "start-message": "babel-node tools/startMessage.js",
     "prestart": "npm-run-all --parallel start-message",
