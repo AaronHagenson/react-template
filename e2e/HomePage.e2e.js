@@ -1,11 +1,14 @@
 module.exports = {
-  'Start launch_url': function(browser) {
+  before: function(browser) {
     let launchUrl = browser.launch_url;
 
     browser.url(launchUrl).waitForElementVisible('body', 1000);
   },
-  'Check for Hello, World!': function(browser) {
-    browser.assert.containsText('.jumbotron', 'Hello, World!');
+  after: function (browser) {
     browser.end();
+  },
+  'Check for Hello, World!': function(browser) {
+    browser.waitForElementVisible('div.jumbotron', 10000)
+      .assert.containsText('div.jumbotron', 'Hello, World!');
   }
 };
