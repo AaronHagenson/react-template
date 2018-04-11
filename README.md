@@ -18,8 +18,6 @@ A UI template utilizing the following technologies:
 
 ## Deployment
 
-### MTAR [XXXXX](http://mtar/MTARForm.aspx?MTARID=XXXXX)
-
 ### Docker
 
 #### Build
