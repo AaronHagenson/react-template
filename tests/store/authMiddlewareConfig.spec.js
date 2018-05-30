@@ -29,7 +29,7 @@ describe('getAuthMiddlewareConfig', () => {
       clientID: 'test id',
       authConnection: 'chr test',
       audience: 'test audience',
-      actionsWhitelist: ['TOKEN_IS_EXPIRED'],
+      actionsWhitelist: ['TOKEN_IS_EXPIRED', 'AUTHENTICATION_FAILED'],
       storagePrefix: 'react-slingshot',
       baseUrl: 'nullblank'
     });

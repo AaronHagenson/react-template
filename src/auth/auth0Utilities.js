@@ -83,11 +83,9 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
       // check for auth token in window hash
       // if no is found there, no go
       const hash = utils.getWindowHash();
-      
+
       auth.parseHash(hash, (err, result) => {
-        debugger;
         if (!result && !err) {
-          debugger;
           const url = window.location.hash || '#/'
 
           resolve({
@@ -130,6 +128,6 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
           });
         }
         });
-      } 
+      }
   });
 };

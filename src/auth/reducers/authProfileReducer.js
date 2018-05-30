@@ -18,9 +18,6 @@ export default function update(state = initialState.auth, action) {
       toastr.error('Failed to retrieve auth0 profile!');
       return state;
 
-    case types.AUTHENTICATION_FAILED:
-      return { ...state, error: action.error };
-
     default:
       return state;
   }

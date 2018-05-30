@@ -22,7 +22,7 @@ store
 
     const ConnectedRoot = connect(
       state => ({
-        error: state.auth.error
+        error: state.token.error
       })
     )(
       props => props.error
