@@ -210,6 +210,9 @@ describe('auth0Utilities', () => {
         return actual;
       });
 
+      function MockParseHash() {
+
+      }
       it('should set tokenIsOk to false if authInfo has error', () => {
         const oldFunc = localStorageFunctions.getItem;
         localStorageFunctions.getItem = () => {
@@ -218,7 +221,12 @@ describe('auth0Utilities', () => {
           });
         };
 
-        const actual = authUtils.currentTokenIsOk('', '', {}, {});
+        const actual = authUtils.currentTokenIsOk('', '', 
+        {
+          parseHash(hash, callback) {            
+          
+        }
+        }, {});
 
         actual.then(result => {
           expect(result).toEqual({
