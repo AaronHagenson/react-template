@@ -1,5 +1,5 @@
 import config from '../config/config';
-import {TOKEN_IS_EXPIRED} from '../auth/constants/actionTypes';
+import {TOKEN_IS_EXPIRED, AUTHENTICATION_FAILED} from '../auth/constants/actionTypes';
 const pack = require('../../package.json');
 
 export const getAuthMiddlewareConfig = () => {
@@ -14,7 +14,7 @@ export const getAuthMiddlewareConfig = () => {
     clientID: config.getConfig().oAuthClientId,
     authConnection: config.getConfig().oAuthConnection,
     audience: config.getConfig().oAuthAudience,
-    actionsWhitelist: [TOKEN_IS_EXPIRED],
+    actionsWhitelist: [TOKEN_IS_EXPIRED, AUTHENTICATION_FAILED],
     storagePrefix: pack.name,
     baseUrl
   };

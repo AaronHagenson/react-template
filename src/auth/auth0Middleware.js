@@ -5,6 +5,7 @@ import * as storage from './localUtilities';
 import {createAuth} from './auth0Factory';
 import { render } from 'react-dom';
 import React from 'react';
+import {authenticationFailed} from './actions/tokenActions';
 
 const authInfoStorageKeySuffix = 'auth';
 const authRedirectRouteStorageKeySuffix = 'authRedirectRoute';
@@ -30,7 +31,7 @@ export const auth0MiddlewareFactory = config => {
       config.storagePrefix + '.' + authRedirectRouteStorageKeySuffix;
   }
 
-  return function({getState}) {
+  return function({getState, dispatch}) {
     debugger;
     return next => {
       return action => {
@@ -57,7 +58,7 @@ export const auth0MiddlewareFactory = config => {
               }
             })
             .catch(error => {
-                authFailedMessage();
+              dispatch(authenticationFailed(error));
             });
           }
       };
@@ -65,22 +66,6 @@ export const auth0MiddlewareFactory = config => {
   };
 };
 
-const authFailedMessage = function() {
-  render(
-    <p> USER AUTHENTICATION FAILED! <br/> <br/>
-        Possible Reasons <br/>
-          1. Timed Out  <br/>
-          2. Expired Credentials <br/>
-          3. Bad Credentials <br/>
-          4. Too many login attempts <br/> <br/>
-        
-        Possible Actions <br/>
-          1. Check your Auth0 credentials/clientID <br/>
-          2. A link to myQ to open a new ticket: myQ/newTicket <br/>
-          3. Try again later in X minutes <br/>
-          </p>,        
-      document.getElementById('app'));
-};
 
 export function handleExpiredToken(config, tokenOkResult, pathName) {
   // if token is expired

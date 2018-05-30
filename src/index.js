@@ -9,6 +9,8 @@ import './styles/styles.scss';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/font-awesome/css/font-awesome.css';
 import '../node_modules/toastr/toastr.scss';
+import {connect} from 'react-redux';
+import AuthenticationFailed from './components/authenticationFailed';
 
 require('./favicon.ico');
 
@@ -18,9 +20,23 @@ store
     // Create an enhanced history that syncs navigation events with the store
     const history = rrr.syncHistoryWithStore(hashHistory, store);
 
+    const ConnectedRoot = connect(
+      state => ({
+        error: state.auth.error
+      })
+    )(
+      props => props.error
+        ? (
+          <div className="container">
+            <AuthenticationFailed error={props.error} />
+          </div>
+        )
+        : <Router history={history} routes={routes} />
+    );
+
     render(
       <Provider store={store}>
-        <Router history={history} routes={routes} />
+        <ConnectedRoot />
       </Provider>,
       document.getElementById('app')
     );
