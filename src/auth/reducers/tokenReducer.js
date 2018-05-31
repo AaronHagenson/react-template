@@ -1,4 +1,4 @@
-import {TOKEN_IS_EXPIRED} from '../constants/actionTypes';
+import {TOKEN_IS_EXPIRED, AUTHENTICATION_FAILED} from '../constants/actionTypes';
 
 const initialState = {
   token: {
@@ -15,6 +15,8 @@ export default function update(state = initialState.token, action) {
       isExpired: true,
       reAuthHandler: action.payload.reAuthHandler
     });
+  } else if (action.type === AUTHENTICATION_FAILED) {
+    return { ...state, error: action.error };
   } else {
     return state;
   }

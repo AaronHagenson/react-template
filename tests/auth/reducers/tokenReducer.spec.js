@@ -1,6 +1,7 @@
 import tokenReducer from '../../../src/auth/reducers/tokenReducer';
 import * as types from '../../../src/auth/constants/actionTypes';
 import sinon from 'sinon';
+import { authenticationFailed } from '../../../src/auth/actions/tokenActions';
 
 describe('tokenReducer', () => {
   it('should return initial state', () => {
@@ -33,5 +34,15 @@ describe('tokenReducer', () => {
 
     expect(state.reAuthHandler.calledOnce).toBe(true);
     spy.restore();
+  });
+
+  it('handles authentication errors', () => {
+    const defaultState = tokenReducer(undefined, {});
+
+    const newState = tokenReducer(defaultState, authenticationFailed({
+      errorMessage: 'test error'
+    }));
+
+    expect(newState.error.errorMessage).toBe('test error');
   });
 });

@@ -22,7 +22,7 @@
     "prebuild": "npm run lint",
     "build": "babel-node tools/build.js",
     "test": "jest --coverage --no-cache --runInBand",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch --coverage",
     "e2e": "nightwatch --config ./nightwatch.js",
     "analyze-bundle": "babel-node ./tools/analyzeBundle.js"
   },

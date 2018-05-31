@@ -1,4 +1,7 @@
-import {TOKEN_IS_EXPIRED} from '../constants/actionTypes';
+import {
+  AUTHENTICATION_FAILED,
+  TOKEN_IS_EXPIRED
+} from '../constants/actionTypes';
 
 export function tokenExpired(reAuthHandler) {
   return {
@@ -6,5 +9,12 @@ export function tokenExpired(reAuthHandler) {
     payload: {
       reAuthHandler
     }
+  };
+}
+
+export function authenticationFailed(error) {
+  return {
+    type: AUTHENTICATION_FAILED,
+    error
   };
 }

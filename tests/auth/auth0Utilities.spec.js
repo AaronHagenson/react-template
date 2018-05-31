@@ -10,14 +10,14 @@ describe('auth0Utilities', () => {
           test: 'test string 1'
         });
       },
-      setItem: () => {}
+      setItem: () => { }
     };
     const sessionStorageFunctions = {
       getItem: () => {
         return JSON.stringify('test string 2');
       },
-      setItem: () => {},
-      removeItem: () => {}
+      setItem: () => { },
+      removeItem: () => { }
     };
 
     let localStorageMock;
@@ -43,7 +43,7 @@ describe('auth0Utilities', () => {
 
     it('should getAuthInfo', () => {
       const actual = authUtils.getAuthInfo('key');
-      expect(actual).toEqual({test: 'test string 1'});
+      expect(actual).toEqual({ test: 'test string 1' });
     });
 
     it('should setAuthInfo', () => {
@@ -173,7 +173,7 @@ describe('auth0Utilities', () => {
         getItem: () => {
           return JSON.stringify({});
         },
-        setItem: () => {}
+        setItem: () => { }
       };
 
       let localStorageMock;
@@ -210,7 +210,7 @@ describe('auth0Utilities', () => {
         return actual;
       });
 
-      it('should set tokenIsOk to false if authInfo has error', () => {
+      it('should reject if parseHash returns error', () => {
         const oldFunc = localStorageFunctions.getItem;
         localStorageFunctions.getItem = () => {
           return JSON.stringify({
@@ -218,17 +218,16 @@ describe('auth0Utilities', () => {
           });
         };
 
-        const actual = authUtils.currentTokenIsOk('', '', {}, {});
+        const actual = authUtils.currentTokenIsOk('', '', {
+          parseHash(hash, callback) {
+            callback({}, null);
+          }
+        }, {});
 
-        actual.then(result => {
-          expect(result).toEqual({
-            isExpired: false,
-            isOk: false
-          });
+        return actual.catch(result => {
+          expect(result).toEqual({});
           localStorageFunctions.getItem = oldFunc;
         });
-
-        return actual;
       });
     });
 
@@ -238,8 +237,8 @@ describe('auth0Utilities', () => {
         getItem: () => {
           return '';
         },
-        setItem: () => {},
-        removeItem: () => {}
+        setItem: () => { },
+        removeItem: () => { }
       };
       const localStorageFunctions = {
         getItem: () => {
@@ -248,7 +247,7 @@ describe('auth0Utilities', () => {
             error: 'error'
           });
         },
-        setItem: () => {}
+        setItem: () => { }
       };
 
       let sessionStorageMock;
@@ -313,7 +312,7 @@ describe('auth0Utilities', () => {
               error: 'error'
             });
           },
-          setItem: () => {}
+          setItem: () => { }
         };
 
         localStorageMock.restore();

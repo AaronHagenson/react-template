@@ -3,6 +3,7 @@
 import * as utilities from './auth0Utilities';
 import * as storage from './localUtilities';
 import {createAuth} from './auth0Factory';
+import {authenticationFailed} from './actions/tokenActions';
 
 const authInfoStorageKeySuffix = 'auth';
 const authRedirectRouteStorageKeySuffix = 'authRedirectRoute';
@@ -28,7 +29,7 @@ export const auth0MiddlewareFactory = config => {
       config.storagePrefix + '.' + authRedirectRouteStorageKeySuffix;
   }
 
-  return function({getState}) {
+  return function({getState, dispatch}) {
     return next => {
       return action => {
         if (actionsWhitelist.includes(action.type)) {
@@ -52,12 +53,16 @@ export const auth0MiddlewareFactory = config => {
               } else {
                 return next(action);
               }
+            })
+            .catch(error => {
+              dispatch(authenticationFailed(error));
             });
-        }
+          }
       };
     };
   };
 };
+
 
 export function handleExpiredToken(config, tokenOkResult, pathName) {
   // if token is expired

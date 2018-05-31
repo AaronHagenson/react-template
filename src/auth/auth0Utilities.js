@@ -1,7 +1,5 @@
 import * as utils from './localUtilities';
 
-const accessTokenHashKey = 'access_token=';
-
 export const getAuthInfo = storageKey => {
   const strAuthInfo = utils.localStorageGetter().getItem(storageKey);
   return JSON.parse(strAuthInfo);
@@ -63,7 +61,7 @@ export const getPathName = (action, state) => {
 };
 
 export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     let authInfo = getAuthInfo(authInfoKey);
     let tokenIsOk = false;
     let isExpired = false;
@@ -86,8 +84,18 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
       // if no is found there, no go
       const hash = utils.getWindowHash();
 
-      if (hash.includes(accessTokenHashKey)) {
-        auth.parseHash(hash, (err, result) => {
+      auth.parseHash(hash, (err, result) => {
+        if (!result && !err) {
+          resolve({
+            isOk: false,
+            isExpired: false
+          });
+        }
+        else if (!result) {
+          reject(err);
+        }
+
+        else {
           const exp = new Date();
           exp.setSeconds(exp.getSeconds() + result.expiresIn);
 
@@ -116,13 +124,8 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
             isOk: tokenIsOk,
             isExpired
           });
-        });
-      } else {
-        resolve({
-          isOk: false,
-          isExpired: false
+        }
         });
       }
-    }
   });
 };
