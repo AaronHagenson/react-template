@@ -86,8 +86,6 @@ export const currentTokenIsOk = (authInfoKey, redirectKey, auth, config) => {
 
       auth.parseHash(hash, (err, result) => {
         if (!result && !err) {
-          const url = window.location.hash || '#/'
-
           resolve({
             isOk: false,
             isExpired: false

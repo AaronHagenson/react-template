@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react';
 
 const defaultMessage = 'An unknown error occurred. Please try again later.';
 const messageMap = {
@@ -28,30 +28,22 @@ const headingMap = {
 
 const errorHeading = err => {
   return headingMap[err.error] || defaultHeading;
-}
+};
 
 const errorMessage = err => {
-  const message = messageMap[err.error] || defaultMessage;
+  return messageMap[err.error] || defaultMessage;
+};
 
-  return <p>{message}</p>;
-}
-
-export default props =>
+const AuthenticationFailed = props =>
   <div className="jumbotron jumbotron-danger">
     <h1>{errorHeading(props.error)}</h1>
-    {errorMessage(props.error)}
+    <p>{errorMessage(props.error)}</p>
   </div>;
 
+AuthenticationFailed.propTypes = {
+  error: PropTypes.shape({
+    error: PropTypes.string.required
+  })
+};
 
-{/* <p>  <br /> <br />
-Possible Reasons <br />
-1. Timed Out  <br />
-2. Expired Credentials <br />
-3. Bad Credentials <br />
-4. Too many login attempts <br /> <br />
-
-Possible Actions <br />
-1. Check your Auth0 credentials/clientID <br />
-2. A link to myQ to open a new ticket: myQ/newTicket <br />
-3. Try again later in X minutes <br />
-</p> */}
+export default AuthenticationFailed;

@@ -3,8 +3,6 @@
 import * as utilities from './auth0Utilities';
 import * as storage from './localUtilities';
 import {createAuth} from './auth0Factory';
-import { render } from 'react-dom';
-import React from 'react';
 import {authenticationFailed} from './actions/tokenActions';
 
 const authInfoStorageKeySuffix = 'auth';
@@ -32,7 +30,6 @@ export const auth0MiddlewareFactory = config => {
   }
 
   return function({getState, dispatch}) {
-    debugger;
     return next => {
       return action => {
         if (actionsWhitelist.includes(action.type)) {

@@ -16,5 +16,5 @@ export function authenticationFailed(error) {
   return {
     type: AUTHENTICATION_FAILED,
     error
-  }
+  };
 }
