@@ -1,32 +1,45 @@
 import React from 'react'
 
-const errorMessage = err => {
-  switch (err.error) {
-    case 'access_denied':
-      return <p>Access was denied to the application. Please contact an administrator for assistance.</p>
-    case 'invalid_request':
-      return <p>The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than
-                once, or is otherwise malformed.</p>
-    case 'unauthorized_client':
-      return <p>The client is not authorized to request an access token using this method.</p>
-    case 'server_error':
-      return <p>There was an internal server error. Please contact an administrator</p>
-    case 'invalid_scope':
-      return <p>The requested scope is invalid, unknown, or malformed</p>
-    case 'temporarily_unavailable':
-      return <p>The authorization server is temporarily unavailable due to some issues</p>
-    case 'unsupported_response_type': 
-      return <p></p>
+const defaultMessage = 'An unknown error occurred. Please try again later.';
+const messageMap = {
+  'access_denied': 'You are not authorized to access the sytem. Go to myQ to request access.',
+  'invalid_request': 'Unable to process the request. Verify the correct request is being used  and is properly formatted.',
+  'unauthorized_client': 'You do not have the correct permissions to access the system. Go to myQ to request access.',
+  'server_error': 'Attempt to sign in failed because the server was unavailable or unable to respond. Try again. If problem persists go to myQ to report the problem.',
+  'invalid_scope': 'Verify the correct request is being used and is properly formatted.',
+  'temporarily_unavailable': 'Due to high traffic or maintenance the system was unable to respond to the request. Wait and try again. If the problem persists, go to myQ to report the problem.',
+  'unsupported_response_type': 'Authorization server does not support this request.',
+  'too_many_attempts': 'Account has been locked because of too many failed attempts. Go to myQ or contact service desk to reset account.',
+  'invalid_user_password': 'Username or password was invalid'
+};
 
-    default:
-      return <p>An unknown error occurred. Please try again later.</p>
-  }
+const defaultHeading = 'User authentication failed';
+const headingMap = {
+  'access_denied': 'Access denied',
+  'invalid_request': 'Authentication failure',
+  'unauthorized_client': 'Permission denied',
+  'server_error': 'Connection failure',
+  'invalid_scope': 'Unable to process request',
+  'temporarily_unavailable': 'Server temporarily unavailable',
+  'unsupported_response_type': 'Unsupported request',
+  'too_many_attempts': 'Account is locked',
+  'invalid_user_password': 'Authentication failure'
+};
+
+const errorHeading = err => {
+  return headingMap[err.error] || defaultHeading;
+}
+
+const errorMessage = err => {
+  const message = messageMap[err.error] || defaultMessage;
+
+  return <p>{message}</p>;
 }
 
 export default props =>
   <div className="jumbotron jumbotron-danger">
-    <h1>USER AUTHENTICATION FAILED!</h1>
-    { errorMessage(props.error) }
+    <h1>{errorHeading(props.error)}</h1>
+    {errorMessage(props.error)}
   </div>;
 
 

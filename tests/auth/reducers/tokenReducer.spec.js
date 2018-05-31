@@ -44,5 +44,5 @@ describe('tokenReducer', () => {
     }));
 
     expect(newState.error.errorMessage).toBe('test error');
-  })
+  });
 });
