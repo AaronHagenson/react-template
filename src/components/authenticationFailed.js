@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
+import { Modal } from 'react-bootstrap';
 
 const defaultMessage = 'An unknown error occurred. Please try again later.';
 const messageMap = {
@@ -35,10 +36,15 @@ const errorMessage = err => {
 };
 
 const AuthenticationFailed = props =>
-  <div className="jumbotron jumbotron-danger">
-    <h1>{errorHeading(props.error)}</h1>
-    <p>{errorMessage(props.error)}</p>
-  </div>;
+  <Modal show>
+    <Modal.Header>
+      <Modal.Title>{errorHeading(props.error)}</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <p>{errorMessage(props.error)}</p>
+    </Modal.Body>
+  </Modal>
+  ;
 
 AuthenticationFailed.propTypes = {
   error: PropTypes.shape({
