@@ -1,6 +1,6 @@
 {
   "oAuthApiEndpoint": "https://test-sso.chrobinson.com",
-  "oAuthClientId": "MO6kU9P2ehZ1i85AHzUXCXTiXPryuCuO",
+  "oAuthClientId": "IpvXXQmeTbSbTNwqs9w8sZ4eDRnMd1ZB",
   "oAuthDomain": "test-sso.chrobinson.com",
   "oAuthConnection": "chradfs",
   "oAuthAudience": ""
